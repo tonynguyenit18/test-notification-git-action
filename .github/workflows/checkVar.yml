@@ -24,4 +24,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name ${{ vars.GITHUB_REF_NAME }}."}' $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name ${{ github.ref_name }}."}' $SLACK_WEBHOOK_URL

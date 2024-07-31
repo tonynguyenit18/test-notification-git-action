@@ -1,0 +1,27 @@
+name: Notify when PR is merged to main or develop branch
+
+on:
+  pull_request:
+    branches: [ "*" ]
+
+
+jobs:
+  auto_send_notification:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Node.js 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # Notify Slack 
+      - name: Notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name ${{ vars.GITHUB_REF_NAME }}."}' $SLACK_WEBHOOK_URL

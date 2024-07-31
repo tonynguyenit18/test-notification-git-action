@@ -19,9 +19,14 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
       # Notify Slack 
       - name: Notify Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name ${{ github.ref_name }}."}' $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name ${{ steps.extract_branch.outputs.branch }}."}' $SLACK_WEBHOOK_URL

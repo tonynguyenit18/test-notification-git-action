@@ -1,9 +1,10 @@
-name: Automated Notifications when PR Ready to review
+name: Notify when PR is merged to main or develop branch
 
 on:
   push:
     branches:
       - main
+      - develop
 
 
 jobs:
@@ -20,19 +21,9 @@ jobs:
         with:
           node-version: "20"
 
-      # Conditionally run the next steps only if the "ready-to-merge" label was added
-      - name: log label
-        run: echo "${{ toJSON(github.event.pull_request.labels.*.name) }}"
-      - name: log label 1
-        if: github.event.label.name == 'can review'
-        run: echo ${{github.event.label.name}} 
-      - name: Check if "can review" label is added
-        if: contains(github.event.pull_request.labels.*.name, 'can review')
-        run: echo "can review label is added to PR."
-
-      # Notify Slack
+      # Notify Slack 
       - name: Notify Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>. A PR has been merged to main. Please rebase if needed!"}' $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>. A PR has been merged to ${{ vars.GITHUB_REF_NAME }}. Please rebase if needed!"}' $SLACK_WEBHOOK_URL

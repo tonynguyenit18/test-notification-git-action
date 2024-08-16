@@ -29,4 +29,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          echo  'Context ${{ toJson(github) }}"}' && curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name `${{ steps.extract_branch.outputs.branch }}`. \nUser name `<@test${{ github.actor }}>`."}' $SLACK_WEBHOOK_URL
+          echo  'Context ${{ toJson(github) }}"}' && curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Hi <!here>.branch name `${{ steps.extract_branch.outputs.branch }}`. \nUser name `<@${{ github.actor }}>`."}' $SLACK_WEBHOOK_URL

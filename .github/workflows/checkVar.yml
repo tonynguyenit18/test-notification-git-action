@@ -28,4 +28,4 @@ jobs:
       - name: Notify Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: curl -o ./.github/workflows/slackNotification.send https://gist.githubusercontent.com/tonynguyenit18/7bb4e833ef507822ef97ac5cdef9192a/raw/slackNotification.send && chmod +x ./.github/workflows/slackNotification.send $SLACK_WEBHOOK_URL https://github.com/tonynguyenit18/test-notification-git-action test_notification
+        run: curl -o ./.github/workflows/slackNotification.send https://gist.githubusercontent.com/tonynguyenit18/7bb4e833ef507822ef97ac5cdef9192a/raw/slackNotification.send && chmod +x ./.github/workflows/slackNotification.send && ./.github/workflows/slackNotification.send $SLACK_WEBHOOK_URL https://github.com/tonynguyenit18/test-notification-git-action test_notification
